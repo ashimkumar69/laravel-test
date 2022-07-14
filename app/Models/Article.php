@@ -19,6 +19,10 @@ class Article extends Model implements HasMedia
         'name',
     ];
 
+//    protected $appends = [
+//        'avatar',
+//    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('articles')

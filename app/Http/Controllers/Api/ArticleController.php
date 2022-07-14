@@ -36,14 +36,19 @@ class ArticleController extends Controller
 //            ->toMediaCollection('articles');
 
         $article->addMediaFromRequest('avatar')
+            ->withResponsiveImages()
             ->toMediaCollection('articles');
 
-        return 'Success';
+        return $article->loadMissing(['media']);
     }
 
     public function show(Article $article)
     {
-        return $article->loadMissing('media');
+         $article->loadMissing(['media']);
+        return [
+            'article' => $article,
+            'thumb' => $article->getFirstMediaUrl('articles', 'thumb'),
+        ];
     }
 
     public function update(Request $request, Article $article)
