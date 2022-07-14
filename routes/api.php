@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PhoneController;
+use App\Http\Controllers\Api\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,12 @@ use App\Http\Controllers\Api\PhoneController;
 |
 */
 
-Route::controller(UserController::class)->group(function () {
-    Route::get('users/search', 'search');
+Route::prefix('users')->controller(UserController::class)->group(function () {
+    Route::get('search', 'search');
 });
-
 Route::apiResource('users', UserController::class);
 Route::apiResource('phones', PhoneController::class);
-
+Route::prefix('articles')->controller(ArticleController::class)->group(function () {
+    Route::delete('destroy-all', 'destroyAll');
+});
+Route::apiResource('articles', ArticleController::class);
